@@ -13,6 +13,11 @@ const NavBar = observer(() => {
     const { user } = useContext(Context);
     const navigate = useNavigate();
 
+    const logOut = () => {
+        user.setUser({})
+        user.setIsAuth(false)
+    }
+
     return (
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
@@ -24,14 +29,16 @@ const NavBar = observer(() => {
                             onClick={() => navigate(ADMIN_ROUTE)}
                         >Admin dashboard</Button>
                         <Button
-                            variant="outline-light" 
-                            onClick={() => navigate(LOGIN_ROUTE)} 
+                            variant="outline-light"
+                            onClick={() => logOut()}
                             className="ms-4"
-                        >Log out</Button>
+                        >
+                            Log out
+                        </Button>
                     </Nav>
                     :
                     <Nav className="ms-auto">
-                        <Button variant="outline-light" onClick={() => user.setIsAuth(true)}>Log in/Sign up</Button>
+                        <Button variant="outline-light" onClick={() => navigate(LOGIN_ROUTE)}>Log in/Sign up</Button>
                     </Nav>
                 }
             </Container>
