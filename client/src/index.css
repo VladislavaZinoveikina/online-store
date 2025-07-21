@@ -1,0 +1,26 @@
+.shopping-cart {
+    position: relative;
+    float: right;
+    cursor: pointer;
+    transition: color, transform, 500ms ease;
+}
+
+.shopping-cart:hover,
+.shopping-cart.active {
+    background-color: darkcyan !important;
+}
+
+.shop-cart {
+    position: absolute;
+    top: 30px;
+    width: 400px;
+    margin-top: 10px;
+    min-height: 100px;
+    left: 0;
+    background-color: #fafafa;
+    padding: 10px;
+    z-index: 100;
+    box-shadow: 11px 10px 7px 1px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 11px 10px 7px 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 11px 10px 7px 1px rgba(0, 0, 0, 0.5);
+}
