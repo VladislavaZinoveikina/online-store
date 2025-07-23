@@ -1,4 +1,4 @@
-import {makeAutoObservable} from 'mobx';
+import { makeAutoObservable, reaction } from 'mobx';
 
 export default class DeviceStore {
     constructor() {
@@ -10,7 +10,16 @@ export default class DeviceStore {
         this._page = 1
         this._totalDeviceCount = 0
         this._limit = 3
+        this._orders = JSON.parse(localStorage.getItem('cart')) || []
+        this._openCart = false;
         makeAutoObservable(this);
+
+        reaction(
+            () => this._orders.map(ord => ({ id: ord.id, count: ord.count })),
+            () => {
+                localStorage.setItem('cart', JSON.stringify(this._orders));
+            }
+        )
     }
 
     setTypes(types) {
@@ -36,6 +45,23 @@ export default class DeviceStore {
     setTotalDeviceCount(count) {
         this._totalDeviceCount = count;
     }
+    setOrders(order) {
+        this._orders = order;
+    }
+    addToOrder(device) {
+        const existing = this._orders.find(d => d.id === device.id);
+        if (existing) {
+            existing.count += 1;
+        } else {
+            this._orders.push({ ...device, count: 1 });
+        }
+    }
+    clearOrders() {
+        this._orders = [];
+    }
+    setOpenCart(bool) {
+        this._openCart = bool;
+    }
 
     get types() {
         return this._types
@@ -60,5 +86,11 @@ export default class DeviceStore {
     }
     get limit() {
         return this._limit
+    }
+    get order() {
+        return this._orders
+    }
+    get openCart() {
+        return this._openCart;
     }
 }

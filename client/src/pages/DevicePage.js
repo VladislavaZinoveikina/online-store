@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigGreyStar from '../assets/bigGreyStar.png';
 import { useParams } from "react-router-dom";
 import { fetchOneDevice } from "../http/deviceAPI";
+import { Context } from "..";
 
 const DevicePage = () => {
-    const [device, setDevice] = useState({info: []});
-    const {id} = useParams();
+    const [device, setDevice] = useState({ info: [] });
+    const { id } = useParams();
+    const { device: deviceStore } = useContext(Context);
 
     useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
     }, [])
+
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        deviceStore.addToOrder(device);
+        deviceStore.setOpenCart(true);  
+    };
 
     return (
         <div>
@@ -36,14 +44,14 @@ const DevicePage = () => {
                             style={{ width: 300, height: 300, fontSize: 32, border: '5px solid lightgray' }}
                         >
                             <h3>From: {device.price}€</h3>
-                            <Button variant={"outline-dark"}>Add to Cart</Button>
+                            <Button variant={"outline-dark"} onClick={handleAddToCart}>Add to Cart</Button>
                         </Card>
                     </Col>
                 </Row>
                 <Row className="d-flex flex-column m-3">
                     <h1>About this item</h1>
                     {device.info.map((info, index) =>
-                        <Row key={info.id} style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}>
+                        <Row key={info.id} style={{ background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10 }}>
                             {info.title} : {info.description}
                         </Row>
                     )}

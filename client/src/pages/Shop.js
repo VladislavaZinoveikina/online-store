@@ -27,6 +27,7 @@ const Shop = observer(() => {
         })
     }, [device.page, device.selectedType, device.selectedBrand])
 
+
     return (
         <Container>
             <Row className="mt-2">
