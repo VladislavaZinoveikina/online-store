@@ -56,11 +56,26 @@ export default class DeviceStore {
             this._orders.push({ ...device, count: 1 });
         }
     }
+    removeFromOrder(id) {
+        this._orders = this._orders.filter(device => device.id !== id)
+    }
     clearOrders() {
         this._orders = [];
     }
     setOpenCart(bool) {
         this._openCart = bool;
+    }
+    increaseCount(id) {
+        const item = this._orders.find(device => device.id === id);
+        if (item) {
+            item.count += 1;
+        }
+    }
+    decreaseCount(id) {
+        const item = this._orders.find(device => device.id === id);
+        if (item && item.count > 1) {
+            item.count -= 1;
+        }
     }
 
     get types() {

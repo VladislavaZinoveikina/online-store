@@ -28,12 +28,14 @@ const NavBar = observer(() => {
                 <NavLink style={{ color: 'white' }} to={SHOP_ROUTE}>BuyDevice</NavLink>
                 {user.isAuth ?
                     <Nav className="ms-auto">
-                        <Button
-                            variant="outline-light"
-                            onClick={() => device.setOpenCart(!device.openCart)}
-                            className={`shopping-cart me-4 ${device.openCart && 'active'}`}
-                        >
-                            <img src="/white-shopping-cart.png" alt="shopping-cart" width={20} height={20} />
+                        <div className="position-relative">
+                            <Button
+                                variant="outline-light"
+                                onClick={() => device.setOpenCart(!device.openCart)}
+                                className={`shopping-cart me-4 ${device.openCart && 'active'}`}
+                            >
+                                <img src="/white-shopping-cart.png" alt="shopping-cart" width={20} height={20} />
+                            </Button>
                             {device.openCart && (
                                 <div className="shop-cart">
                                     {device.order.length > 0 ? (
@@ -50,7 +52,7 @@ const NavBar = observer(() => {
                                     )}
                                 </div>
                             )}
-                        </Button>
+                        </div>
                         <Button
                             variant="outline-light"
                             onClick={() => navigate(ADMIN_ROUTE)}
